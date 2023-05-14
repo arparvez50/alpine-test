@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alpine JS practice - It's awesome</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <style>
+    body{
+      height: 100vh;
+      display: grid;
+      place-content: center;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+    .container{
+      max-width: 1300px;
+      width: 90%;
+      margin: 0 auto;
+      background: #efefef;
+    }
+    .card{
+      padding: 30px;
+    }
+    .card h2 {
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+    .card p {
+      margin-top: 0;
+    }
+    .card .btn {
+      padding: 10px 25px;
+      background: green;
+      color: white;
+      font-family: inherit;
+      outline: none;
+      border: none;
+      border-radius: 5px;
+    }
+    .card .btn:hover {
+      cursor: pointer;
+      background-color: darkblue;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card" x-data="quote" x-init="getQuote()">
+      <h2 x-text="content"></h2>
+      <p> - <span  x-text="author"></span> </p>
+      <button @click="re()" class="btn">Reload</button>
+    </div>
+  </div>
+
+
+
+  <script>
+    let quote = {
+      content: "",
+      author: "",
+      getQuote(){
+        fetch("https://api.quotable.io/random")
+        .then(rawData => rawData.json())
+        .then(data => {
+          this.content = data.content;
+          this.author = data.author;
+        })
+      }
+    }
+   function re(){
+      location.reload();
+    }
+  </script>
+</body>
+</html>
